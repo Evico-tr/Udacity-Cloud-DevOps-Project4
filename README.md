@@ -2,49 +2,68 @@
 
 ## Project Overview
 
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
+This project about operationalizing a Python flask app `app.py`—that serves out predictions about housing prices through API calls.
 
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
+Using `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. The Data set is gotten from the [data source site](https://www.kaggle.com/c/boston-housing). 
 
-### Project Tasks
+## HOW TO RUN THE APP
 
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-* Complete a Dockerfile to containerize this application
-* Deploy your containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
+### Setup the Environment
 
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
-
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
-
----
-
-## Setup the Environment
-
-* Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv. 
+* Run `make setup` to setup python virtual environment. Just like below
 ```bash
-python3 -m pip install --user virtualenv
+python3 -m venv ~/.devops
 # You should have Python 3.7 available in your host. 
 # Check the Python path using `which python3`
-# Use a command similar to this one:
-python3 -m virtualenv --python=<path-to-Python3.7> .devops
 source .devops/bin/activate
 ```
+### Installing Dependencies
+
 * Run `make install` to install the necessary dependencies
+* Install hadolint with these commands `wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 && chmod +x /bin/hadolint`. This will help lint Dockerfile.
+* Install docker using this [link](https://docs.docker.com/engine/install/ubuntu/).
+* Install minikube using this [link](). This will help to run Kubernetes locally.
 
-### Running `app.py`
+### Testing the source code and Dockerfile
+* Run `make lint` to check the source and Dockerfile
 
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+### Running the Flask app `app.py`
 
-### Kubernetes Steps
+#### Running the app locally on local Machine:  
+* Run `python3 app.py`
+#### Running the app in Docker container:
+* Run `./run_docker.sh` then run `./make_predicton.sh` to make predictions.
+* Run `./upload_docker.sh` to upload the docker image to [docker hub](https://hub.docker.com/).
 
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+#### Running the app in Kubernetes:
+3. Run `./run_kubernetes.sh` then run `./make_predicton.sh` to make predictions.
+
+## EXPLANATION OF THE FILES IN THE REPOSITORY
+### Folder Arrangement
+```
+.
+├── Dockerfile
+├── Makefile
+├── README.md
+├── app.py
+├── hadolint
+├── make_prediction.sh
+├── model_data
+│   ├── boston_housing_prediction.joblib
+│   └── housing.csv
+├── output_txt_files
+│   ├── docker_out.txt
+│   └── kubernetes_out.txt
+├── .circleci
+|   └── config.yml
+├── requirements.txt
+├─- run_docker.sh
+├── run_kubernetes.sh
+└── upload_docker.sh
+```
+* `.circleci/config.yml` contains the pipeline config file for cirleci integration.
+* `output_txt_files` contains the prediction outputs for docker run and kubernates run after `make_prediction.sh` script was run.
+* `app.py` contains the source code of the flask application
+* `Dockerfile` contains the configuration for the docker container env. setup
+* `Makefile` defines a set of tasks to be executed
+* `requirements.txt` contains the dependencies to install
