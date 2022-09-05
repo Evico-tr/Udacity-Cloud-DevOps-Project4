@@ -1,1 +1,15 @@
-<paste log output from Kubernetes-mediated prediction, here>
+<(.devops) voclabs:~/environment/Udacity-Cloud-DevOps-Project4 (master) $ ./run_kubernetes.sh 
+Error from server (AlreadyExists): pods "ml-predict" already exists
+NAME         READY   STATUS    RESTARTS   AGE
+ml-predict   1/1     Running   0          6m22s
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
+
+
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
