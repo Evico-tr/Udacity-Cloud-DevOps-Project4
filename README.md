@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This project about operationalizing a Python flask app `app.py`—that serves out predictions about housing prices through API calls.
+This project is about operationalizing a Python flask app `app.py`—that serves out predictions about housing prices through API calls.
 
-Using `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. The Data set is gotten from the [data source site](https://www.kaggle.com/c/boston-housing). 
+It uses a pre-trained `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. The Data set is gotten from the [data source site](https://www.kaggle.com/c/boston-housing). 
 
 ## HOW TO RUN THE APP
 
